@@ -1,58 +1,36 @@
 package com.example.clientnetworkconfigservice.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
-
+/**
+ * Request DTO used for creating/updating a client network configuration.
+ *
+ * This class represents the JSON payload expected by the POST API.
+ * Validation annotations can be added later once dependency resolution is fixed.
+ */
+@Getter
+@Setter
 public class CreateClientNetworkRequest {
 
-    @NotBlank
+    /** Client identifier for whom network config is being stored. */
     private String clientId;
 
-    @NotBlank
-    private String clientName;
+    /** Target environment for the configuration (dev/test/prod). */
+    private String environment;
 
-    @NotBlank
-    private String environment; // DEV/UAT/PROD
+    /** Requested network protocol (HTTP/HTTPS/TCP/UDP). */
+    private String protocol;
 
-    @NotBlank
-    private String cidrBlock; // e.g. 10.0.0.0/16
+    /** Allowed CIDR block for access control. */
+    private String cidrBlock;
 
-    @NotBlank
-    private String routingProtocol; // STATIC/OSPF/BGP
+    /** Port required for communication. */
+    private int port;
 
-    @NotEmpty
-    private List<Integer> vlans;
+    /** Whether encryption (TLS/SSL) is required for the connection. */
+    private boolean encryptionEnabled;
 
-    @NotNull
-    private Boolean vpnRequired;
-
+    /** Optional notes or special client requirements. */
     private String notes;
-
-    // Getters and setters (IntelliJ: Generate -> Getters and Setters)
-    public String getClientId() { return clientId; }
-    public void setClientId(String clientId) { this.clientId = clientId; }
-
-    public String getClientName() { return clientName; }
-    public void setClientName(String clientName) { this.clientName = clientName; }
-
-    public String getEnvironment() { return environment; }
-    public void setEnvironment(String environment) { this.environment = environment; }
-
-    public String getCidrBlock() { return cidrBlock; }
-    public void setCidrBlock(String cidrBlock) { this.cidrBlock = cidrBlock; }
-
-    public String getRoutingProtocol() { return routingProtocol; }
-    public void setRoutingProtocol(String routingProtocol) { this.routingProtocol = routingProtocol; }
-
-    public List<Integer> getVlans() { return vlans; }
-    public void setVlans(List<Integer> vlans) { this.vlans = vlans; }
-
-    public Boolean getVpnRequired() { return vpnRequired; }
-    public void setVpnRequired(Boolean vpnRequired) { this.vpnRequired = vpnRequired; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
 }

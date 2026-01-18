@@ -1,47 +1,45 @@
 package com.example.clientnetworkconfigservice.model;
 
+import lombok.Builder;
+import lombok.Getter;
+
 import java.time.Instant;
-import java.util.List;
 
+/**
+ * Domain model representing a client's networking protocol requirements
+ * and configuration details.
+ *
+ * This is the central entity stored by the repository layer. In a DynamoDB-backed
+ * version, this model can be annotated with DynamoDB mapper annotations.
+ */
+@Getter
+@Builder
 public class ClientNetworkProfile {
+
+    /** Unique identifier for a client (primary lookup key). */
     private String clientId;
-    private String clientName;
+
+    /** Environment where config applies (e.g., dev / test / prod). */
     private String environment;
+
+    /** Network protocol requested by client (e.g., HTTP, HTTPS, TCP, UDP). */
+    private String protocol;
+
+    /** CIDR block / network range allowed for client access (e.g., 10.0.0.0/24). */
     private String cidrBlock;
-    private String routingProtocol;
-    private List<Integer> vlans;
-    private Boolean vpnRequired;
+
+    /** Port used for inbound/outbound communication (e.g., 443 for HTTPS). */
+    private int port;
+
+    /** Indicates whether traffic must be encrypted (TLS/SSL enabled). */
+    private boolean encryptionEnabled;
+
+    /** Optional additional notes or special requirements from client. */
     private String notes;
-    private String createdAt;
 
-    public void setCreatedAtNow() {
-        this.createdAt = Instant.now().toString();
-    }
+    /** Unique request identifier for the latest write/update operation. */
+    private String requestId;
 
-    public String getClientId() { return clientId; }
-    public void setClientId(String clientId) { this.clientId = clientId; }
-
-    public String getClientName() { return clientName; }
-    public void setClientName(String clientName) { this.clientName = clientName; }
-
-    public String getEnvironment() { return environment; }
-    public void setEnvironment(String environment) { this.environment = environment; }
-
-    public String getCidrBlock() { return cidrBlock; }
-    public void setCidrBlock(String cidrBlock) { this.cidrBlock = cidrBlock; }
-
-    public String getRoutingProtocol() { return routingProtocol; }
-    public void setRoutingProtocol(String routingProtocol) { this.routingProtocol = routingProtocol; }
-
-    public List<Integer> getVlans() { return vlans; }
-    public void setVlans(List<Integer> vlans) { this.vlans = vlans; }
-
-    public Boolean getVpnRequired() { return vpnRequired; }
-    public void setVpnRequired(Boolean vpnRequired) { this.vpnRequired = vpnRequired; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
-
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    /** Timestamp indicating when the profile was last updated. */
+    private Instant lastUpdatedAt;
 }

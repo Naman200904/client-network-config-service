@@ -1,42 +1,44 @@
 package com.example.clientnetworkconfigservice.dto;
 
-import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
+import java.time.Instant;
+
+/**
+ * Response DTO returned by both GET and POST APIs.
+ *
+ * Contains the stored client network configuration along with metadata
+ * such as requestId and lastUpdatedAt for traceability.
+ */
+@Getter
+@Builder
 public class ClientNetworkResponse {
+
+    /** Unique identifier of the client. */
     private String clientId;
-    private String clientName;
+
+    /** Environment where this configuration applies. */
     private String environment;
+
+    /** Requested protocol (HTTP/HTTPS/TCP/UDP). */
+    private String protocol;
+
+    /** Allowed CIDR block/range. */
     private String cidrBlock;
-    private String routingProtocol;
-    private List<Integer> vlans;
-    private Boolean vpnRequired;
+
+    /** Port used for the configured service. */
+    private int port;
+
+    /** Indicates if encryption is required/enabled. */
+    private boolean encryptionEnabled;
+
+    /** Optional notes or extra requirements. */
     private String notes;
-    private String createdAt;
 
-    public String getClientId() { return clientId; }
-    public void setClientId(String clientId) { this.clientId = clientId; }
+    /** Unique id generated during write operation for traceability. */
+    private String requestId;
 
-    public String getClientName() { return clientName; }
-    public void setClientName(String clientName) { this.clientName = clientName; }
-
-    public String getEnvironment() { return environment; }
-    public void setEnvironment(String environment) { this.environment = environment; }
-
-    public String getCidrBlock() { return cidrBlock; }
-    public void setCidrBlock(String cidrBlock) { this.cidrBlock = cidrBlock; }
-
-    public String getRoutingProtocol() { return routingProtocol; }
-    public void setRoutingProtocol(String routingProtocol) { this.routingProtocol = routingProtocol; }
-
-    public List<Integer> getVlans() { return vlans; }
-    public void setVlans(List<Integer> vlans) { this.vlans = vlans; }
-
-    public Boolean getVpnRequired() { return vpnRequired; }
-    public void setVpnRequired(Boolean vpnRequired) { this.vpnRequired = vpnRequired; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
-
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    /** Timestamp of the most recent update/write. */
+    private Instant lastUpdatedAt;
 }
